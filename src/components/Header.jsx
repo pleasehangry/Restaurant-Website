@@ -1,18 +1,31 @@
 import React from 'react';
 import { MdShoppingBasket } from 'react-icons/md';
+import { motion } from 'framer-motion';
+
+import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { app } from '../firebase.config';
 
 import Logo from './img/logo.png';
 import Avatar from './img/avatar.png';
+import { Link } from 'react-router-dom';
+import { async } from '@firebase/util';
 
 const Header = () => {
+    const firebaseAuth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    const login = async () => {
+        const response = await signInWithPopup(firebaseAuth, provider);
+        console.log(response);
+    };
     return (
         <header className="w-screen fixed z-50 bg-slate-300 p-6 px-16">
             {/* desktop & tablet */}
             <div className="hidden md:flex w-full h-full items-center justify-between">
-                <div className="flex items-center gap-2">
+                <Link to="/" className="flex items-center gap-2">
                     <img src={Logo} alt="Logo" className="w-10 object-cover" />
                     <p className="text-headingColor text-xl font-bold">City</p>
-                </div>
+                </Link>
                 <div className="flex items-center gap-8">
                     <ul className="flex items-center gap-8 ">
                         {['Home', 'Menu', 'About Us', 'Service'].map((item, index) => (
@@ -31,11 +44,15 @@ const Header = () => {
                         </div>
                     </div>
 
-                    <img
-                        src={Avatar}
-                        alt="User Profile"
-                        className="w-10 min-w-[40px] h-10 min-h-[40px] drop-shadow-2xl"
-                    />
+                    <div className="relative">
+                        <motion.img
+                            onClick={login}
+                            whileTap={{ scale: 0.6 }}
+                            src={Avatar}
+                            alt="User Profile"
+                            className="w-10 min-w-[40px] h-10 min-h-[40px] drop-shadow-2xl cursor-pointer"
+                        />
+                    </div>
                 </div>
             </div>
             {/* Mobile */}
