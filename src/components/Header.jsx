@@ -88,7 +88,7 @@ const Header = () => {
                                 exit={{ opacity: 0, scale: 0.6 }}
                                 className="w-40 flex flex-col bg-gray-50 shadow-xl rounded-lg absolute top-12 right-0 "
                             >
-                                <Link to="/createItem">
+                                <Link to="/createItem" onClick={() => setIsMenu(false)}>
                                     <p className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100 ease-in-out text-textColor text-base">
                                         New Item <MdAdd />
                                     </p>
@@ -131,7 +131,7 @@ const Header = () => {
                             exit={{ opacity: 0, scale: 0.6 }}
                             className="w-40 flex flex-col bg-gray-50 shadow-xl rounded-lg absolute top-12 right-0 "
                         >
-                            <Link to="/createItem">
+                            <Link to="/createItem" onClick={() => setIsMenu(false)}>
                                 <p className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100 ease-in-out text-textColor text-base">
                                     New Item <MdAdd />
                                 </p>
@@ -140,6 +140,7 @@ const Header = () => {
                                 {['Home', 'Menu', 'About Us', 'Service'].map((item, index) => (
                                     <li
                                         key={index}
+                                        onClick={() => setIsMenu(false)}
                                         className="hover:bg-slate-200 text-base px-4 py-2 hover: text-headingColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer"
                                     >
                                         {item}
