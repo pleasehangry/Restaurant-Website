@@ -11,7 +11,7 @@ import {
 
 import { categories } from '../utils/data';
 import Loader from './Loader';
-import { saveItem } from '../utils/firebaseFuntions';
+import { getAllFoodItems, saveItem } from '../utils/firebaseFuntions';
 import {
     deleteObject,
     getDownloadURL,
@@ -19,7 +19,10 @@ import {
     uploadBytes,
     uploadBytesResumable,
 } from 'firebase/storage';
+
 import { storage } from '../firebase.config';
+import { useStateValue } from '../context/StateProvider';
+import { actionType } from '../context/reducer';
 
 const CreateContainer = () => {
     const [title, setTitle] = useState('');
@@ -115,10 +118,10 @@ const CreateContainer = () => {
                 setIsLoading(false);
                 setFields(true);
                 setMsg('Data uploaded successfully');
+                clearData();
                 setAlertStatus('success');
                 setTimeout(() => {
                     setFields(false);
-                    clearData();
                 }, 4000);
             }
         } catch (error) {
@@ -131,6 +134,7 @@ const CreateContainer = () => {
                 setIsLoading(false);
             }, 4000);
         }
+        fetchData();
     };
 
     const clearData = () => {
@@ -139,6 +143,17 @@ const CreateContainer = () => {
         setCalories('');
         setPrice('');
         setCategory('Select category');
+    };
+
+    const [{}, dispatch] = useStateValue();
+
+    const fetchData = async () => {
+        await getAllFoodItems().then((data) => {
+            dispatch({
+                type: actionType.SET_FOOD_ITEMS,
+                foodItems: data,
+            });
+        });
     };
 
     return (
@@ -186,7 +201,8 @@ const CreateContainer = () => {
                         {categories.map((item) => (
                             <option
                                 key={item.id}
-                                className="text-base border-0 outline-none capitalize bg-white text-headingColor"
+                                className="text-base border-0 outline-none capitalize bg-white
+                                text-headingColor"
                                 value={item.urlParamName}
                             >
                                 {item.name}
@@ -194,7 +210,11 @@ const CreateContainer = () => {
                         ))}
                     </select>
                 </div>
-                <div className="group flex justify-center items-center flex-col border-2 border-dotted border-gray-300 w-full h-225 md:h-340 cursor-pointer rounded-lg">
+                <div
+                    className="group flex justify-center items-center flex-col
+                    border-2 border-dotted border-gray-300 w-full
+                    h-225 md:h-340 cursor-pointer rounded-lg"
+                >
                     {isLoading ? (
                         <Loader />
                     ) : (
