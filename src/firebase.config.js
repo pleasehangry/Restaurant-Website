@@ -5,7 +5,8 @@ import { getStorage } from 'firebase/storage';
 const firebaseConfig = {
     apiKey: 'AIzaSyCOCsay8S0rwoTOTkDIc9dvJKIRv2P4_hE',
     authDomain: 'deliveryapp-62882.firebaseapp.com',
-    databaseURL: 'https://deliveryapp-62882-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL:
+        'https://deliveryapp-62882-default-rtdb.asia-southeast1.firebasedatabase.app',
     projectId: 'deliveryapp-62882',
     storageBucket: 'deliveryapp-62882.appspot.com',
     messagingSenderId: '703140014586',
