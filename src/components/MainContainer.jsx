@@ -2,11 +2,11 @@ import React, { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 
-import { HomeContainer, RowContainer, MenuContainer } from './';
+import { HomeContainer, RowContainer, MenuContainer, CartContainer } from './';
 import { useStateValue } from '../context/StateProvider';
 
 const MainContainer = () => {
-    const [{ foodItems }, dispatch] = useStateValue();
+    const [{ foodItems, cartShow }, dispatch] = useStateValue();
 
     const [scrollValue, setScrollValue] = useState(0);
 
@@ -51,6 +51,7 @@ const MainContainer = () => {
             </section>
 
             <MenuContainer />
+            {cartShow && <CartContainer />}
         </div>
     );
 };

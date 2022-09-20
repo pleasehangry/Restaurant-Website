@@ -17,7 +17,14 @@ const Header = () => {
 
     const [isMenu, setIsMenu] = useState();
 
-    const [{ user }, dispatch] = useStateValue();
+    const [{ user, cartShow, cartItems }, dispatch] = useStateValue();
+
+    const showCard = () => {
+        dispatch({
+            type: actionType.SET_CART_SHOW,
+            cartShow: !cartShow,
+        });
+    };
 
     const login = async () => {
         if (!user) {
@@ -57,20 +64,29 @@ const Header = () => {
                         exit={{ opacity: 0, x: 200 }}
                         className="flex items-center gap-8 "
                     >
-                        {['Home', 'Menu', 'About Us', 'Service'].map((item, index) => (
-                            <li
-                                key={index}
-                                className="text-base text-headingColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer"
-                            >
-                                {item}
-                            </li>
-                        ))}
+                        {['Home', 'Menu', 'About Us', 'Service'].map(
+                            (item, index) => (
+                                <li
+                                    key={index}
+                                    className="text-base text-headingColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer"
+                                >
+                                    {item}
+                                </li>
+                            ),
+                        )}
                     </motion.ul>
-                    <div className="relative flex items-center justify-center">
+                    <div
+                        className="relative flex items-center justify-center"
+                        onClick={showCard}
+                    >
                         <MdShoppingBasket className="text-textColor text-2xl ml-8 cursor-pointer" />
-                        <div className="w-5 h-5 absolute -top-2 -right-2 rounded-full bg-cartNumBg flex items-center justify-center">
-                            <p className="text-sm text-white font-semibold">2</p>
-                        </div>
+                        {cartItems && cartItems.length > 0 && (
+                            <div className="w-5 h-5 absolute -top-2 -right-2 rounded-full bg-cartNumBg flex items-center justify-center">
+                                <p className="text-sm text-white font-semibold">
+                                    {cartItems.length}
+                                </p>
+                            </div>
+                        )}
                     </div>
 
                     <div className="relative">
@@ -88,7 +104,10 @@ const Header = () => {
                                 exit={{ opacity: 0, scale: 0.6 }}
                                 className="w-40 flex flex-col bg-gray-50 shadow-xl rounded-lg absolute top-12 right-0 "
                             >
-                                <Link to="/createItem" onClick={() => setIsMenu(false)}>
+                                <Link
+                                    to="/createItem"
+                                    onClick={() => setIsMenu(false)}
+                                >
                                     <p className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100 ease-in-out text-textColor text-base">
                                         New Item <MdAdd />
                                     </p>
@@ -106,11 +125,18 @@ const Header = () => {
             </div>
             {/* Mobile */}
             <div className="flex md:hidden w-full h-full items-center justify-between">
-                <div className="relative flex items-center justify-center">
+                <div
+                    className="relative flex items-center justify-center"
+                    onClick={showCard}
+                >
                     <MdShoppingBasket className="text-textColor text-2xl ml-8 cursor-pointer" />
-                    <div className="w-5 h-5 absolute -top-2 -right-2 rounded-full bg-cartNumBg flex items-center justify-center">
-                        <p className="text-sm text-white font-semibold">2</p>
-                    </div>
+                    {cartItems && cartItems.length > 0 && (
+                        <div className="w-5 h-5 absolute -top-2 -right-2 rounded-full bg-cartNumBg flex items-center justify-center">
+                            <p className="text-sm text-white font-semibold">
+                                {cartItems.length}
+                            </p>
+                        </div>
+                    )}
                 </div>
                 <Link to="/" className="flex items-center gap-2">
                     <img src={Logo} alt="Logo" className="w-10 object-cover" />
@@ -131,21 +157,26 @@ const Header = () => {
                             exit={{ opacity: 0, scale: 0.6 }}
                             className="w-40 flex flex-col bg-gray-50 shadow-xl rounded-lg absolute top-12 right-0 "
                         >
-                            <Link to="/createItem" onClick={() => setIsMenu(false)}>
+                            <Link
+                                to="/createItem"
+                                onClick={() => setIsMenu(false)}
+                            >
                                 <p className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100 ease-in-out text-textColor text-base">
                                     New Item <MdAdd />
                                 </p>
                             </Link>
                             <ul className="flex flex-col">
-                                {['Home', 'Menu', 'About Us', 'Service'].map((item, index) => (
-                                    <li
-                                        key={index}
-                                        onClick={() => setIsMenu(false)}
-                                        className="hover:bg-slate-200 text-base px-4 py-2 hover: text-headingColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer"
-                                    >
-                                        {item}
-                                    </li>
-                                ))}
+                                {['Home', 'Menu', 'About Us', 'Service'].map(
+                                    (item, index) => (
+                                        <li
+                                            key={index}
+                                            onClick={() => setIsMenu(false)}
+                                            className="hover:bg-slate-200 text-base px-4 py-2 hover: text-headingColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer"
+                                        >
+                                            {item}
+                                        </li>
+                                    ),
+                                )}
                             </ul>
                             <p
                                 className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100 ease-in-out text-textColor text-base"

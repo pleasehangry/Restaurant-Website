@@ -55,7 +55,7 @@ const RowContainer = ({ flag, data, scrollValue }) => {
                                 />
                             </motion.div>
                             <motion.div
-                                whileTap={{ scale: 0.75 }}
+                                whiletap={{ scale: 0.75 }}
                                 className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center cursor-pointer hover:shadow-md -mt-8"
                                 onClick={() => setItems([...cartItems, item])}
                             >
